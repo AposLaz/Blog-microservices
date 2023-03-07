@@ -16,6 +16,8 @@ microservices-apps/
 ## API structure
 
 **client/**
+
 **comments/**
+
 **posts/**
 
