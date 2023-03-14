@@ -23,7 +23,7 @@ function PostCreate() {
                 })
   }
   return (
-    <div className='container'>
+    <div>
         <form className='flex flex-column justifyCenter alignCenter' 
               onSubmit={(e)=>{submitPost(e)}}
         >
