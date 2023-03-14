@@ -1,0 +1,25 @@
+
+
+:root{
+    --bg-main: #f4f4f4;
+    --text-primary-color: #393a4f;
+    --text-second-color: #999;
+    --btn-text-primary: #fcfcfc;
+    --btn-text-second: #fcfcfc;
+    --btn-bg-primary: #3f88e3; 
+    --btn-bg-second:#fcfcfc; 
+
+    /* Pallete */
+    --dark-blue: #074E8C;
+    --light-blue: #3f88e3;
+
+    /* fonts */
+    --font-family-Helvetica: Roboto,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --font-family-Opes-Sans: "Open Sans", Arial, sans-serif;
+    --font-family-sans-serif: Poppins, sans-serif;
+}
+
+
+
+
+  

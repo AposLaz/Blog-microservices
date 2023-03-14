@@ -15,8 +15,17 @@ microservices-apps/
 ```
 ## API structure
 
+#### Frontend
 **client/**
 
+/api
+    Here exists api for all
+
+/reducers
+    fetch_reducer = for handle the state
+
+
+#### Backend
 **comments/**
 
 **posts/**
