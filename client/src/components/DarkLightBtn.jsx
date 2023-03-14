@@ -8,10 +8,9 @@ const setDarkMode = ()=>{
 };
 
 const setLightMode = ()=>{
-    document.querySelector("body").setAttribute("data-theme","light");
+    document.querySelector("body").setAttribute("data-theme","light")
     localStorage("selectedTheme","light")
 }
-
 const selectedTheme = localStorage.getItem("selectedTheme");
 
 if(selectedTheme === "dark"){
@@ -34,8 +33,6 @@ const toggleTheme = (e)=>{
             onChange={toggleTheme}
             defaultChecked={selectedTheme === "dark"}
         />
-        <div class="skin one"></div>
-        <div class="skin two"></div>
         <button className='btn btn-primary'>DarkLightBtn</button>
     </div>
   )

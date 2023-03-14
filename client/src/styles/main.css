@@ -20,6 +20,16 @@
 }
 
 
+[data-theme="dark"]{
+    --bg-main: #2f3b50;
+    --text-primary-color: #fafafa;
+    --text-second-color: #a2a5b9;
+    --btn-text-primary: #fcfcfc;
+    --btn-text-second: #fff;
+    --btn-bg-primary: #3f88e3; 
+    --btn-bg-second:#151a23; 
+}
+
 
 
   

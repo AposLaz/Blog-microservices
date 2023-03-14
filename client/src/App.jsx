@@ -4,9 +4,9 @@ import PostCreate from './routes/PostCreate'
 
 function App() {
   return (
-    <div>
+    <div className='container'>
       <DarkLightBtn />
-      Blog App
+      <h1 className='text-center'>Create a Post</h1>
       <PostCreate />
     </div>
   )
