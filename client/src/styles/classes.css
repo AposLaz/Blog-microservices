@@ -484,10 +484,30 @@
     flex-direction: column-reverse;
 }
 
+.flexWrap{
+    flex-wrap: wrap;
+}
+
 .justifyCenter{
     justify-content: center;
 }
 
+.justifyBetween{
+    justify-content: space-between;
+}
+
+.justifyEvenly{
+    justify-content: space-evenly;
+}
+
+.justifyAround{
+    justify-content: space-around;
+}
+
 .alignCenter{
     align-items: center;
+}
+
+.gap-1{
+    gap: 1rem;
 }

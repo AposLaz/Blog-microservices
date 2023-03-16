@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import { createPost } from '../api/posts-api';
+import SubmitButton from '../components/SubmitButton';
 
 const styleInput = {
   width: '350px', 
@@ -15,8 +16,8 @@ function PostCreate() {
   const [title, setTitle] = useState('')
 
   const submitPost = async (e)=>{
-    e.preventDefault()
-                createPost(title)
+      e.preventDefault()
+          await createPost(title)
                 .then(setTitle(''))
                 .catch((error)=>{
                   console.log(error)
@@ -38,7 +39,9 @@ function PostCreate() {
                     required
                 />
             </div>
-            <button type='submit' className='btn btn-primary mt-1'>Submit</button>
+            <SubmitButton 
+              button_name="Submit"
+            />
         </form>
     </div>
   )

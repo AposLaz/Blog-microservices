@@ -12,6 +12,7 @@
     /* Pallete */
     --dark-blue: #074E8C;
     --light-blue: #3f88e3;
+    --blog-card-bg: #fff;
 
     /* fonts */
     --font-family-Helvetica: Roboto,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
@@ -28,6 +29,8 @@
     --btn-text-second: #fff;
     --btn-bg-primary: #3f88e3; 
     --btn-bg-second:#151a23; 
+
+    --blog-card-bg: red;
 }
 
 

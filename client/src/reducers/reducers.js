@@ -11,14 +11,13 @@
 
 
 export const fetch_reducer = (state, action)=>{
-    console.log(state)
     switch (action.type) {
         case 'FETCH_REQUEST':
             return {...state,loading: true};
         case 'FETCH_SUCCESS':
-            return ;
+            return {...state,loading: false, fetch_list: action.payload};
         case 'FETCH_ERROR':
-            return ;
+            return {...state, loading: false, error: action.payload}
         default:
             return state;
     }

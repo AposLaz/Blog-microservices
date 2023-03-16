@@ -18,12 +18,22 @@ microservices-apps/
 #### Frontend
 **client/**
 
+actions -> 
+    Create a Post
+    Display Post
+    Comment a Post
+    Display a Post
+
 /api
     Here exists api for all
 
 /reducers
     fetch_reducer = for handle the state
 
+/tree for (jsx)
+    PostList
+        BlogCard
+            CreateCommentCard
 
 #### Backend
 **comments/**
