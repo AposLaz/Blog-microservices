@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const uri = 'http://localhost:5000/posts/'
+const uri = 'http://localhost:4001/posts/'
 const route = '/comments'
 
 export const createComment = async(id,comment)=>{

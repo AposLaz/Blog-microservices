@@ -1,6 +1,7 @@
 const express = require('express');
 const {randomBytes} = require('crypto');
 const cors = require('cors')
+const {postBlog} = require('./kafkaProducer')
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.get('/posts', (req,res)=>{
     res.send(posts)
 })
 
-app.post('/posts', (req,res)=>{
+app.post('/posts', async (req,res)=>{
     const id = randomBytes(4).toString('hex');
     const {title} = req.body
 
@@ -23,6 +24,8 @@ app.post('/posts', (req,res)=>{
         title
     }
 
+    await postBlog(posts[id])
+    
     res.status(201).send("Post Created")
 })
 
