@@ -1,6 +1,7 @@
 const express = require('express');
 const {randomBytes} = require('crypto');
 const cors = require('cors')
+const {commentBlog} = require('./kafkaProducer')
 
 const app = express();
 
@@ -8,7 +9,7 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const commentsByPostId = {};
+let commentsByPostId = {};
 
 app.get('/posts/:id/comments', (req,res)=>{
     res.send(commentsByPostId[req.params.id] || []) //if result is undefined return empty array
@@ -17,14 +18,20 @@ app.get('/posts/:id/comments', (req,res)=>{
 app.post('/posts/:id/comments', (req,res)=>{
     const commentId = randomBytes(4).toString('hex');
     const {comment} = req.body;
-    const comments = commentsByPostId[req.params.id] || []; //if undefined then give us an empty array
 
-    comments.push({
+    const comments = {
         id: commentId,
-        comment
-    })
-    commentsByPostId[req.params.id] = comments
+        content: comment
+    }
+
+    const commentsByPost = {
+        post_id: req.params.id,
+        comments
+    }
     
+    commentsByPostId[req.params.id] = comments
+
+    commentBlog(commentsByPost)
     res.status(201).send(comments)
 });
 

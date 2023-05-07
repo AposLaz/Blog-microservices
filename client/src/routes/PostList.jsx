@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { fetch_reducer } from '../reducers/reducers'
-import { getPosts } from '../api/posts-api';
+import { getPosts } from '../api/post-comments-api';
 import BlogCard from '../components/Blogs/BlogCard';
 
 function PostList() {
@@ -40,6 +40,7 @@ function PostList() {
                           key={index}
                           postId={post.id}
                           title={post.title}
+                          comments={post.comments}
                       />
             })}
           </div>

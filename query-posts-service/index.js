@@ -1,5 +1,11 @@
 const express = require('express')
 const cors = require('cors')
+const {posts_comments} = require('./kafkaConsumer')
+
+/**
+ * Run Kafka Consumer here
+ */
+
 
 const app = express()
 
@@ -9,7 +15,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.get('/posts',(req,res)=>{
-    res.send('OK')
+    console.log(posts_comments)
+    res.send(posts_comments)
 })
 
 app.listen(4003, ()=>{

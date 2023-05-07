@@ -4,7 +4,7 @@ import CreateCommentsCard from './CreateCommentsCard'
 
 
 function BlogCard(props) {
-    const {postId, title} = props
+    const {postId, title, comments} = props
 
   return (
     <div className='blog-card pl-2 pr-2 pt-1 pb-1'>
@@ -13,7 +13,7 @@ function BlogCard(props) {
             postId={postId}
         />
         <CommentList 
-          postId={postId}
+          comments={comments}
         />
     </div>
   )

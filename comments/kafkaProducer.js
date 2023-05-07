@@ -12,12 +12,14 @@ const producer = kafka.producer({
     allowAutoTopicCreation: false,
 })
 
-const postBlog = async (msg)=>{
+
+const commentBlog = async (msg)=>{
+
     await producer.connect()
     await producer.send({
-        topic: 'PostCreated',
+        topic: 'CommentCreated',
         messages: [{
-            key: msg.id,    //send post id
+            key: msg.post_id, //post id = get the first object id
             value: JSON.stringify(msg),
         }],
       })
@@ -26,5 +28,5 @@ const postBlog = async (msg)=>{
 }
 
 module.exports = {
-    postBlog
+    commentBlog
 };
