@@ -31,7 +31,6 @@ const run = async () => {
             comments: []                    //comments of post here
         }
       },
-      
     })
 
     await consumer_comment.run({

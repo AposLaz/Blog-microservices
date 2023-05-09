@@ -2,6 +2,7 @@ const express = require('express');
 const {randomBytes} = require('crypto');
 const cors = require('cors')
 const {commentBlog} = require('./kafkaProducer')
+const {PORT} = require('./config/index')
 
 const app = express();
 
@@ -37,6 +38,6 @@ app.post('/posts/:id/comments', (req,res)=>{
 
 
 
-app.listen(4001, ()=>{
-    console.log('Listening on port 4001')
+app.listen(PORT, ()=>{
+    console.log('Listening on port '+PORT)
 })

@@ -1,9 +1,10 @@
 const { Kafka } = require('kafkajs');
 const { Partitioners } = require('kafkajs')
+const {HOST} = require('./config/index')
 
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: ['localhost:8097', 'localhost:8098', 'localhost:8099']
+    brokers: [HOST+':8097', HOST+':8098', HOST+':8099']
 });
 
 //create default partitioner

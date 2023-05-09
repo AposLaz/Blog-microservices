@@ -4,15 +4,21 @@ This is a small application in microservices.
 
 Initial goal is create the logic of microservices.
 
-There are 3 services. Structure of folders.
-
 ```bash
 microservices-apps/
 ├── client/
 ├── comments/
 ├── posts/
+├── query-posts-service/
+├── kafka/
 └── README.md
 ```
+
+## STRUCTURE
+
+For every service created a specific image in docker hub
+There is a ```.env``` file where exist all configuration for ports, hosts etc. Use your specific values or let defaults.
+
 ## API structure
 
 #### Frontend

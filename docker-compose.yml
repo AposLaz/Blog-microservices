@@ -1,0 +1,24 @@
+version: 'version'
+
+services:
+  # client:
+  #  container_name: client
+  #  build: 
+  #    context: 
+  #    dockerfile: 
+  #  ports:
+  #    - "4000:4000"
+  comments:
+    container_name: comments
+    image: alazidis/blog-microservices-comments:1.2.2
+    ports:
+     - "6000:6000"
+    environment:
+     COMMENT_PORT: 6000
+  # query-posts-service:
+  #   container_name: query-posts-service
+  #   build: 
+  #     context: ./query-posts-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "4001:4001"
