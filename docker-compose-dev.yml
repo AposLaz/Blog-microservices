@@ -1,62 +1,62 @@
 version: 'version'
 
 services:
-  # client:
-  #  container_name: client
-  #  build: 
-  #    context: 
-  #    dockerfile: 
-  #  ports:
-  #    - "4000:4000"
-  # comments:
-  #   container_name: comments
-  #   image: alazidis/blog-microservices-comments:1.2.3
-  #   ports:
-  #    - "${COMMENT_PORT}:${COMMENT_PORT}"
-  #   environment:
-  #    COMMENT_PORT: ${COMMENT_PORT}
+  posts:
+   container_name: posts
+   build: 
+      context: posts/
+      dockerfile: Dockerfile.posts.dev
+   command: nodemon index.js
+   ports:
+    - "${POST_PORT}:${POST_PORT}"
+   volumes:
+    - ./posts/:/app/
+   environment:
+    POST_PORT: ${POST_PORT}
+    POST_TOPIC: ${POST_TOPIC}
+    KAFKA_BROKERS: ${KAFKA_BROKERS}
+   networks:
+    - default
 
   comments:
-    container_name: comments
-    image: alazidis/blog-microservices-comments
-    ports:
-     - "${COMMENT_PORT}:${COMMENT_PORT}"
-    environment:
-      COMMENT_PORT: ${COMMENT_PORT}
-      COMMENT_TOPIC: ${COMMENT_TOPIC}
-      KAFKA_BROKERS: ${KAFKA_BROKERS}
-    networks:
-      - default
-  
-  posts:
-    container_name: posts
-    image: alazidis/blog-microservices-posts
-    ports:
-     - "${POST_PORT}:${POST_PORT}"
-    environment:
-      POST_PORT: ${POST_PORT}
-      POST_TOPIC: ${POST_TOPIC}
-      KAFKA_BROKERS: ${KAFKA_BROKERS}
-    networks:
-      - default
+   container_name: comments
+   build: 
+      context: comments/
+      dockerfile: Dockerfile.comments
+   command: nodemon index.js
+   ports:
+    - "${COMMENT_PORT}:${COMMENT_PORT}"
+   volumes:
+    - ./comments/:/app/
+   environment:
+    COMMENT_PORT: ${COMMENT_PORT}
+    COMMENT_TOPIC: ${COMMENT_TOPIC}
+    KAFKA_BROKERS: ${KAFKA_BROKERS}
+   networks:
+    - default
   
   query-comments-post:
-    container_name: query-comments-post
-    image: alazidis/blog-microservices-query
-    ports:
-     - "${QUERY_PORT}:${QUERY_PORT}"
-    environment:
-     QUERY_PORT: ${QUERY_PORT}
-     POST_TOPIC: ${POST_TOPIC}
-     COMMENT_TOPIC: ${COMMENT_TOPIC}
-     KAFKA_BROKERS: ${KAFKA_BROKERS}
-    restart: on-failure
-    depends_on:
+   container_name: query-comments-post
+   build: 
+      context: query-posts-service/
+      dockerfile: Dockerfile.query.dev
+   command: nodemon index.js
+   ports:
+    - "${QUERY_PORT}:${QUERY_PORT}"
+   volumes:
+    - ./query-posts-service/:/app/
+   environment:
+    QUERY_PORT: ${QUERY_PORT}
+    POST_TOPIC: ${POST_TOPIC}
+    COMMENT_TOPIC: ${COMMENT_TOPIC}
+    KAFKA_BROKERS: ${KAFKA_BROKERS}
+   restart: on-failure
+   depends_on:
       - kafka1
       - kafka2
       - kafka3      
-    networks:
-     - default
+   networks:
+    - default
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
@@ -73,6 +73,7 @@ services:
       - "8097:8097"
     depends_on:
       - zookeeper
+    restart: always
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -80,10 +81,9 @@ services:
       KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:8097,INTERNAL://kafka1:19092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
     networks:
-     - default
-    restart: on-failure
+    - default
     healthcheck:
-        test: ["CMD", "ping", "-c","1", "localhost:8098"]
+        test: ["CMD", "ping", "-c","1", "localhost:8097"]
         interval: 30s
         timeout: 10s
         retries: 5
@@ -95,6 +95,7 @@ services:
       - "8098:8098"
     depends_on:
       - zookeeper
+    restart: always
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -102,8 +103,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:8098,INTERNAL://kafka2:29092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
     networks:
-     - default
-    restart: on-failure
+    - default
     healthcheck:
         test: ["CMD", "ping", "-c","1", "localhost:8098"]
         interval: 30s
@@ -117,6 +117,7 @@ services:
       - "8099:8099"
     depends_on:
       - zookeeper
+    restart: always
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -125,9 +126,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
     networks:
      - default
-    restart: on-failure
     healthcheck:
-        test: ["CMD", "ping", "-c","1", "localhost:8098"]
+        test: ["CMD", "ping", "-c","1", "localhost:8099"]
         interval: 30s
         timeout: 10s
         retries: 5

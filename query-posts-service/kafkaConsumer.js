@@ -1,12 +1,13 @@
 const { Kafka } = require('kafkajs');
+const {POST_TOPIC, COMMENT_TOPIC, KAFKA_BROKERS} = require('./config/index')
 
 const kafka = new Kafka({
     clientId: 'my-app-consumer',
-    brokers: ['localhost:8097', 'localhost:8098', 'localhost:8099']
+    brokers: KAFKA_BROKERS
 });
 
-const topic_post = 'PostCreated'
-const topic_comment = 'CommentCreated'
+const topic_post = POST_TOPIC
+const topic_comment = COMMENT_TOPIC
 const consumer_post = kafka.consumer({groupId: 'blog-posts-1'})
 const consumer_comment = kafka.consumer({groupId: 'blog-comments-1'})
 

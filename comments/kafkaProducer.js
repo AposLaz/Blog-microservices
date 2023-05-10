@@ -1,16 +1,16 @@
 const { Kafka } = require('kafkajs');
 const { Partitioners } = require('kafkajs')
-const {HOST} = require('./config/index')
+const { TOPIC, KAFKA_BROKERS} = require('./config/index')
 
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: [HOST+':8097', HOST+':8098', HOST+':8099']
+    brokers: KAFKA_BROKERS
 });
 
 //create default partitioner
 const producer = kafka.producer({ 
     createPartitioner: Partitioners.DefaultPartitioner, 
-    allowAutoTopicCreation: false,
+    allowAutoTopicCreation: true,
 })
 
 
@@ -18,7 +18,7 @@ const commentBlog = async (msg)=>{
 
     await producer.connect()
     await producer.send({
-        topic: 'CommentCreated',
+        topic: TOPIC,
         messages: [{
             key: msg.post_id, //post id = get the first object id
             value: JSON.stringify(msg),

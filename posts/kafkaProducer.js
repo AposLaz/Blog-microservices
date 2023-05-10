@@ -1,9 +1,10 @@
 const { Kafka } = require('kafkajs');
 const { Partitioners } = require('kafkajs')
+const {TOPIC, KAFKA_BROKERS} = require('./config/index')
 
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: ['localhost:8097', 'localhost:8098', 'localhost:8099']
+    brokers: KAFKA_BROKERS
 });
 
 //create default partitioner
@@ -15,7 +16,7 @@ const producer = kafka.producer({
 const postBlog = async (msg)=>{
     await producer.connect()
     await producer.send({
-        topic: 'PostCreated',
+        topic: TOPIC,
         messages: [{
             key: msg.id,    //send post id
             value: JSON.stringify(msg),
