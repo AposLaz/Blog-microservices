@@ -11,7 +11,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.get('/posts',(req,res)=>{
-    console.log(posts_comments)
     res.send(posts_comments)
 })
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
+import {query_host} from '../config/config'
 
-const url = 'http://localhost:4003/posts'
+const url = `${query_host}/posts`
 
 export const getPosts = axios.get(url)

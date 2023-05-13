@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { post_host } from '../config/config';
 
-const url = 'http://localhost:4000/posts'
+const url = `${post_host}/posts`
 
 export const createPost = async (title)=>{
     await axios.post(url,{

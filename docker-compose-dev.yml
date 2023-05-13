@@ -1,6 +1,38 @@
 version: 'version'
 
 services:
+  client:
+   container_name: client
+   build: 
+     context: client/
+     dockerfile: Dockerfile.frontend.dev
+   expose: 
+    - 3000 
+   ports:
+     - "3000:3000"
+   stdin_open: true
+   environment:
+    REACT_APP_POST_HOST: ${REACT_APP_POST_HOST}
+    REACT_APP_COMMENT_HOST: ${REACT_APP_COMMENT_HOST}
+    REACT_APP_QUERY: ${REACT_APP_QUERY}
+    CHOKIDAR_USEPOLLING: true
+   volumes:
+    - ./client/:/app/
+    - /node_modules
+
+  nginx:
+   build:
+    dockerfile: ./Dockerfile.dev
+    context: ./nginx
+   restart: always
+   ports:
+    - "3050:80"
+   depends_on:
+    - client
+    - posts
+    - comments
+    - query-comments-post
+    
   posts:
    container_name: posts
    build: 
@@ -24,7 +56,7 @@ services:
    container_name: comments
    build: 
       context: comments/
-      dockerfile: Dockerfile.comments
+      dockerfile: Dockerfile.comments.dev
    command: nodemon index.js
    ports:
     - "${COMMENT_PORT}:${COMMENT_PORT}"

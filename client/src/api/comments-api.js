@@ -1,6 +1,7 @@
 import axios from "axios"
+import {comment_host} from '../config/config'
 
-const uri = 'http://localhost:4001/posts/'
+const uri = `${comment_host}/posts/`
 const route = '/comments'
 
 export const createComment = async(id,comment)=>{
