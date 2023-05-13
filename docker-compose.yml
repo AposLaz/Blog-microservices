@@ -1,4 +1,4 @@
-version: 'version'
+version: '3.9'
 
 services:
   # client:
@@ -27,6 +27,9 @@ services:
       KAFKA_BROKERS: ${KAFKA_BROKERS}
     networks:
       - default
+    depends_on:
+      - kafka_admin
+    restart: always
   
   posts:
     container_name: posts
@@ -39,6 +42,9 @@ services:
       KAFKA_BROKERS: ${KAFKA_BROKERS}
     networks:
       - default
+    depends_on:
+      - kafka_admin
+    restart: always
   
   query-comments-post:
     container_name: query-comments-post
@@ -50,13 +56,28 @@ services:
      POST_TOPIC: ${POST_TOPIC}
      COMMENT_TOPIC: ${COMMENT_TOPIC}
      KAFKA_BROKERS: ${KAFKA_BROKERS}
-    restart: on-failure
+    restart: always
     depends_on:
-      - kafka1
-      - kafka2
-      - kafka3      
+      - kafka_admin
     networks:
      - default
+    
+  
+  kafka_admin:
+   container_name: kafka_admin
+   image: alazidis/kafka_admin_client
+   environment:
+    KAFKA_TOPICS: ${KAFKA_TOPICS}
+    KAFKA_BROKERS: ${KAFKA_BROKERS}
+    KAFKA_REPLICATION_FACTOR: ${KAFKA_REPLICATION_FACTOR}
+    KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+   restart: always
+   networks:
+     - default
+   depends_on:
+     control-center:
+       condition: service_started       
+   
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
@@ -150,6 +171,7 @@ services:
       PORT: 9021
     networks:
     - default
+    restart: always
 
 networks:
     default:

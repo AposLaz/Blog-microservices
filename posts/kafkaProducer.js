@@ -4,7 +4,11 @@ const {TOPIC, KAFKA_BROKERS} = require('./config/index')
 
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: KAFKA_BROKERS
+    brokers: KAFKA_BROKERS,
+    retry: {
+        initialRetryTime: 300,
+        retries: 10
+      } 
 });
 
 //create default partitioner

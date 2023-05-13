@@ -17,6 +17,8 @@ services:
     KAFKA_BROKERS: ${KAFKA_BROKERS}
    networks:
     - default
+   depends_on:
+    - kafka_admin
 
   comments:
    container_name: comments
@@ -34,6 +36,8 @@ services:
     KAFKA_BROKERS: ${KAFKA_BROKERS}
    networks:
     - default
+   depends_on:
+    - kafka_admin
   
   query-comments-post:
    container_name: query-comments-post
@@ -52,11 +56,30 @@ services:
     KAFKA_BROKERS: ${KAFKA_BROKERS}
    restart: on-failure
    depends_on:
-      - kafka1
-      - kafka2
-      - kafka3      
+      - kafka_admin      
    networks:
     - default
+  
+  kafka_admin:
+   container_name: kafka_admin
+   build: 
+      context: kafka/
+      dockerfile: Dockerfile.kafka_admin.dev
+   command: nodemon index.js
+   volumes:
+    - ./kafka/:/app/
+   environment:
+    KAFKA_TOPICS: ${KAFKA_TOPICS}
+    KAFKA_BROKERS: ${KAFKA_BROKERS}
+    KAFKA_REPLICATION_FACTOR: ${KAFKA_REPLICATION_FACTOR}
+    KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+   networks:
+     - default
+   restart: always
+   depends_on:
+     control-center:
+       condition: service_started
+     
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
@@ -150,6 +173,7 @@ services:
       PORT: 9021
     networks:
     - default
+    restart: always
 
 networks:
     default:

@@ -3,13 +3,23 @@ const {POST_TOPIC, COMMENT_TOPIC, KAFKA_BROKERS} = require('./config/index')
 
 const kafka = new Kafka({
     clientId: 'my-app-consumer',
-    brokers: KAFKA_BROKERS
+    brokers: KAFKA_BROKERS,
+    retry: {
+      initialRetryTime: 300,
+      retries: 10
+    } 
 });
 
 const topic_post = POST_TOPIC
 const topic_comment = COMMENT_TOPIC
-const consumer_post = kafka.consumer({groupId: 'blog-posts-1'})
-const consumer_comment = kafka.consumer({groupId: 'blog-comments-1'})
+const consumer_post = kafka.consumer({
+                              groupId: 'blog-posts-1', 
+                              allowAutoTopicCreation: false
+                            })
+const consumer_comment = kafka.consumer({
+                              groupId: 'blog-comments-1', 
+                              allowAutoTopicCreation: false
+                            })
 
 //this is our post table
 let posts_comments = {}
@@ -42,8 +52,12 @@ const run = async () => {
     })
   }
 
-  run()
+  //run consumers after 10seconds
+  setTimeout(()=>{
+    run()
     .catch((e)=>console.error(`[example/consumer] ${e.message}`, e))
+  },20000)
+  
 
 
   const errorTypes = ['unhandledRejection', 'uncaughtException']

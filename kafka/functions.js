@@ -1,3 +1,9 @@
+const { 
+        KAFKA_NUM_PARTITIONS,
+        KAFKA_REPLICATION_FACTOR,
+        KAFKA_TOPICS
+    } = require("./config/index")
+
 const create_topics = async (kafka)=>{
     
     const admin = kafka.admin()
@@ -6,12 +12,8 @@ const create_topics = async (kafka)=>{
         await admin.connect()
 
         //find that topics exist
-        const topics = await (await admin.listTopics()).filter((topic)=>{
-            if(topic === 'PostCreated' || topic === 'CommentCreated'){
-                return true
-            }
-        })
-        
+        const kafka_exist_topics=await admin.listTopics()
+        const topics=await KAFKA_TOPICS.filter(topic => kafka_exist_topics.includes(topic))
         /**
          * if topics exists then return topics
          * else create topics
@@ -22,15 +24,13 @@ const create_topics = async (kafka)=>{
         }
         else{
             await admin.createTopics({
-                topics: [{
-                    topic: 'PostCreated',
-                    numPartitions: 3,     // default: -1 (uses broker `num.partitions` configuration)
-                    replicationFactor: 3, // default: -1 (uses broker `default.replication.factor` configuration)
-                },{
-                    topic: 'CommentCreated',
-                    numPartitions: 3,     // default: -1 (uses broker `num.partitions` configuration)
-                    replicationFactor: 3, // default: -1 (uses broker `default.replication.factor` configuration)
-                }]
+                topics: KAFKA_TOPICS.map((topic)=>{
+                        return {
+                            topic: topic,
+                            numPartitions: KAFKA_NUM_PARTITIONS,     // default: -1 (uses broker `num.partitions` configuration)
+                            replicationFactor: KAFKA_REPLICATION_FACTOR,
+                        }
+                    })
             })
         }
         await admin.disconnect()
