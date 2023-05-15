@@ -2,21 +2,23 @@
 
 This is a small application in microservices.
 
-Initial goal is create the logic of microservices.
+Initial goal is create the logic of microservices and after host in Kubernetes.
+
+## STRUCTURE
 
 ```bash
-microservices-apps/
+blog-microservices/
 ├── client/
+├── nginx/
 ├── comments/
 ├── posts/
 ├── query-posts-service/
 ├── kafka/
+├── .env
 └── README.md
 ```
 
-## STRUCTURE
-
-For every service created a specific image in docker hub
+For every service created a specific image in docker hub. Expect **nginx**.
 There is a ```.env``` file where exist all configuration for ports, hosts etc. Use your specific values or let defaults.
 
 ## API structure
@@ -24,11 +26,22 @@ There is a ```.env``` file where exist all configuration for ports, hosts etc. U
 #### Frontend
 **client/**
 
-actions -> 
-    Create a Post
-    Display Post
-    Comment a Post
-    Display a Post
+Client is the frontend application in which user can  
+1. Create Posts
+2. Display Posts
+3. Comment in Posts
+4. Display Post with comments
+
+
+***API***
+
+Action | HTTP request | URI | Folder/file
+--- | --- | ---
+*Create Posts* | `POST` | `posts` | **/src/api/posts-api.js**
+*Get Posts* | `POST` | | **/src/api/posts-api.js**
+*Create Comments* | `POST` | | **/src/api/posts-api.js**
+*Get Comments* | `POST` | | **/src/api/posts-api.js**
+*Get Posts & Comments* | `POST` | | **/src/api/posts-api.js**
 
 /api
     Here exists api for all
