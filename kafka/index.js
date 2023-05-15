@@ -6,8 +6,8 @@ const kafka = new Kafka({
     clientId: 'my-app',
     brokers: KAFKA_BROKERS,
     retry: {
-        initialRetryTime: 300,
-        retries: 10
+        initialRetryTime: 1000,
+        retries: 20
       }    
 });
 
