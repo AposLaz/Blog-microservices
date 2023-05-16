@@ -56,12 +56,7 @@ Variable | Info
 `${REACT_APP_COMMENT_HOST}` | Container name of Comment `Service` 
 `${REACT_APP_QUERY_HOST}` | Container name of Query `Service` 
 
-
-<div style="color:#555;background:#ddffff;padding:1rem;border-radius:8px;border: 1px solid #555">
-<p><strong style="font-size: 18px;color:#333">Info!</strong></p>
-<hr style="background:#000;">
-<p>ddd</p>
-</div>
+> :warning: **If you want change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder.
 
 ### Backend
 
