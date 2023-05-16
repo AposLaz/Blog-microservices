@@ -85,8 +85,7 @@ Variable | Info | Folder/file
 `${REACT_APP_PORT}` | Port for Client | Exists only in **.env** file
 
 > :warning: If you change `${REACT_APP_PORT}` then you have to edit the `default.conf` file in path ***client/nginx/default.conf***. Edit the port in line `listen 3000;` and change `3000` with you port.
-
-
+---
 ### Backend
 
 **Posts Service**
@@ -126,7 +125,7 @@ _database:_
 | -----------| -----------|
 | 123        | FirstTitle |
 
-
+---
 **Comments Service**
 
 Action | HTTP request | URI | Folder/file
@@ -164,6 +163,7 @@ _database:_
 | -----------------| -----------------|
 | j23              | My first Comment |
 
+---
 **Apache Kafka**
 
 Apache Kafka have at least 2 Topis:
@@ -186,7 +186,7 @@ When a `comment/` creates the Producer sends to CommentCreated_topic the followi
         postId: 123 //Post Id
     }
 ```
-
+---
 **query-posts-service/**
 
 When we want to fetch a post with all of its comments we query for the post in **query-posts-service/** Service.
