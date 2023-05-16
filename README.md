@@ -23,7 +23,8 @@ There is a ```.env``` file where exist all configuration for ports, hosts etc. U
 
 ## API structure
 
-#### Frontend
+### Frontend
+
 **client/**
 
 Client is the frontend application in which user can  
@@ -32,29 +33,38 @@ Client is the frontend application in which user can
 3. Comment in Posts
 4. Display Post with comments
 
-
 ***API***
 
+In API table there are some environment variables.
+Check them below.
+
 Action | HTTP request | URI | Folder/file
---- | --- | ---
-*Create Posts* | `POST` | `posts` | **/src/api/posts-api.js**
-*Get Posts* | `POST` | | **/src/api/posts-api.js**
-*Create Comments* | `POST` | | **/src/api/posts-api.js**
-*Get Comments* | `POST` | | **/src/api/posts-api.js**
-*Get Posts & Comments* | `POST` | | **/src/api/posts-api.js**
+--- | --- | --- | ---
+*Create Posts* | `POST` | `${REACT_APP_POST_HOST}/posts` | **/src/api/posts-api.js**
+*Get Posts* | `GET` | `${REACT_APP_POST_HOST}/posts` | **/src/api/posts-api.js**
+*Create Comments* | `POST` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **/src/api/commnets-api.js**
+*Get Comments from Specific Post* | `GET` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **/src/api/commnets-api.js**
+*Get Posts & Comments* | `GET` | `${REACT_APP_QUERY_HOST}/posts` | **/src/api/post-comments-api.js**
 
-/api
-    Here exists api for all
+***ENVIRONMENT VARIABLES***
 
-/reducers
-    fetch_reducer = for handle the state
+All environment variables exist in `.env` file in root folder.
 
-/tree for (jsx)
-    PostList
-        BlogCard
-            CreateCommentCard
+Variable | Info
+--- | ---
+`${REACT_APP_POST_HOST}` | Container name of Posts `Service` 
+`${REACT_APP_COMMENT_HOST}` | Container name of Comment `Service` 
+`${REACT_APP_QUERY_HOST}` | Container name of Query `Service` 
 
-#### Backend
+
+<div style="color:#555;background:#ddffff;padding:1rem;border-radius:8px;border: 1px solid #555">
+<p><strong style="font-size: 18px;color:#333">Info!</strong></p>
+<hr style="background:#000;">
+<p>ddd</p>
+</div>
+
+### Backend
+
 **comments/**
 
 _api:_
