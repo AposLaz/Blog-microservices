@@ -65,24 +65,24 @@ Check them below.
 
 Action | HTTP request | URI | Folder/file
 --- | --- | --- | ---
-*Create Posts* | `POST` | `${REACT_APP_POST_HOST}/posts` | **client/src/api/posts-api.js**
-*Get Posts* | `GET` | `${REACT_APP_POST_HOST}/posts` | **client/src/api/posts-api.js**
-*Create Comments* | `POST` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **client/src/api/commnets-api.js**
-*Get Comments from Specific Post* | `GET` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **client/src/api/commnets-api.js**
-*Get Posts & Comments* | `GET` | `${REACT_APP_QUERY_HOST}/posts` | **client/src/api/post-comments-api.js**
+*Create Posts* | `POST` | `${REACT_APP_POST_HOST}/posts` | client/src/api/posts-api.js
+*Get Posts* | `GET` | `${REACT_APP_POST_HOST}/posts` | client/src/api/posts-api.js
+*Create Comments* | `POST` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | client/src/api/commnets-api.js
+*Get Comments from Specific Post* | `GET` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | client/src/api/commnets-api.js
+*Get Posts & Comments* | `GET` | `${REACT_APP_QUERY_HOST}/posts` | client/src/api/post-comments-api.js
 
 ***ENVIRONMENT VARIABLES***
 
 All environment variables exist in `.env` file in root folder.
 
-> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change config file in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
 
 Variable | Info | Folder/file
 --- | --- | ---
-`${REACT_APP_POST_HOST}` | Container name of `Posts Service` | **client/src/config/config.js**
-`${REACT_APP_COMMENT_HOST}` | Container name of `Comments Service` | **client/src/config/config.js**
-`${REACT_APP_QUERY_HOST}` | Container name of `Query Service` | **client/src/config/config.js**
-`${REACT_APP_PORT}` | Port for Client | Exists only in `**.env** file
+`${REACT_APP_POST_HOST}` | Container name of `Posts Service` | client/src/config/config.js
+`${REACT_APP_COMMENT_HOST}` | Container name of `Comments Service` | client/src/config/config.js
+`${REACT_APP_QUERY_HOST}` | Container name of `Query Service` | client/src/config/config.js
+`${REACT_APP_PORT}` | Port for Client | Exists only in **.env** file
 
 > :warning: If you change `${REACT_APP_PORT}` then you have to edit the `default.conf` file in path ***client/nginx/default.conf***. Edit the port in line `listen 3000;` and change `3000` with you port.
 
@@ -93,20 +93,20 @@ Variable | Info | Folder/file
 
 Action | HTTP request | URI | Folder/file
 --- | --- | --- | ---
-*Create Posts* | `POST` | `http://localhost:{POST_PORT}/posts` | **posts/index.js**
-*Get Posts* | `GET` | `http://localhost:{POST_PORT}/posts` | **posts/index.js**
+*Create Posts* | `POST` | `http://localhost:{POST_PORT}/posts` | posts/index.js
+*Get Posts* | `GET` | `http://localhost:{POST_PORT}/posts` | posts/index.js
 
 ***ENVIRONMENT VARIABLES***
 
 All environment variables exist in `.env` file in root folder.
 
-> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change config file in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
 
 Variable | Info | Folder/file
 --- | --- | ---
-`${POST_PORT}` | The port in which run `Posts Service` | **posts/config/index.js**
-`${POST_TOPIC}` | `Kafka Topic` in which `Posts Service` sends the created Post | **posts/config/index.js**
-`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | **posts/config/index.js**
+`${POST_PORT}` | The port in which run `Posts Service` | posts/config/index.js
+`${POST_TOPIC}` | `Kafka Topic` in which `Posts Service` sends the created Post | posts/config/index.js
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | posts/config/index.js
 
 _request structure:_
 
@@ -131,20 +131,20 @@ _database:_
 
 Action | HTTP request | URI | Folder/file
 --- | --- | --- | ---
-*Create Comments* | `POST` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | **comments/index.js**
-*Get Comments* | `GET` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | **comments/index.js**
+*Create Comments* | `POST` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | comments/index.js
+*Get Comments* | `GET` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | comments/index.js
 
 ***ENVIRONMENT VARIABLES***
 
 All environment variables exist in `.env` file in root folder.
 
-> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change config file in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
 
 Variable | Info | Folder/file
 --- | --- | ---
-`${COMMENT_PORT}` | The port in which run `Comments Service` | **posts/config/index.js**
-`${COMMENT_TOPIC}` | `Kafka Topic` in which `Comments Service` sends created Comments for a specific Post | **posts/config/index.js**
-`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | **posts/config/index.js**
+`${COMMENT_PORT}` | The port in which run `Comments Service` | posts/config/index.js
+`${COMMENT_TOPIC}` | `Kafka Topic` in which `Comments Service` sends created Comments for a specific Post | posts/config/index.js
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | posts/config/index.js
 
 _request structure:_
 
