@@ -21,11 +21,36 @@ blog-microservices/
 For every service created a specific image in docker hub. Expect **nginx**.
 There is a ```.env``` file where exist all configuration for ports, hosts etc. Use your specific values or let defaults.
 
+
+## Getting Started
+
+1. Clone repository	
+    ```bash
+	$ git clone https://github.com/AposLaz/Blog-microservices.git
+		
+	$ cd Blog-microservices
+
+	# Remove current origin repo
+	$ git remote remove origin  
+    ```
+2. Start Application using Docker :whale2: https://www.docker.com/
+
+    ```bash
+    $ docker-compose up -d
+
+    # wait 30seconds
+    ```
+3. Open **http://localhost:3050/** on broswer and create your posts.
+
+# Documentation
+
+If you want to make changes or learn how my application works read the documentation below
+
 ## API structure
 
 ### Frontend
 
-**client/**
+**Client Service**
 
 Client is the frontend application in which user can  
 1. Create Posts
@@ -40,35 +65,86 @@ Check them below.
 
 Action | HTTP request | URI | Folder/file
 --- | --- | --- | ---
-*Create Posts* | `POST` | `${REACT_APP_POST_HOST}/posts` | **/src/api/posts-api.js**
-*Get Posts* | `GET` | `${REACT_APP_POST_HOST}/posts` | **/src/api/posts-api.js**
-*Create Comments* | `POST` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **/src/api/commnets-api.js**
-*Get Comments from Specific Post* | `GET` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **/src/api/commnets-api.js**
-*Get Posts & Comments* | `GET` | `${REACT_APP_QUERY_HOST}/posts` | **/src/api/post-comments-api.js**
+*Create Posts* | `POST` | `${REACT_APP_POST_HOST}/posts` | **client/src/api/posts-api.js**
+*Get Posts* | `GET` | `${REACT_APP_POST_HOST}/posts` | **client/src/api/posts-api.js**
+*Create Comments* | `POST` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **client/src/api/commnets-api.js**
+*Get Comments from Specific Post* | `GET` | `${REACT_APP_COMMENT_HOST}/posts/{post_id}/comments` | **client/src/api/commnets-api.js**
+*Get Posts & Comments* | `GET` | `${REACT_APP_QUERY_HOST}/posts` | **client/src/api/post-comments-api.js**
 
 ***ENVIRONMENT VARIABLES***
 
 All environment variables exist in `.env` file in root folder.
 
-Variable | Info
---- | ---
-`${REACT_APP_POST_HOST}` | Container name of Posts `Service` 
-`${REACT_APP_COMMENT_HOST}` | Container name of Comment `Service` 
-`${REACT_APP_QUERY_HOST}` | Container name of Query `Service` 
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
 
-> :warning: **If you want change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder.
+Variable | Info | Folder/file
+--- | --- | ---
+`${REACT_APP_POST_HOST}` | Container name of `Posts Service` | **client/src/config/config.js**
+`${REACT_APP_COMMENT_HOST}` | Container name of `Comments Service` | **client/src/config/config.js**
+`${REACT_APP_QUERY_HOST}` | Container name of `Query Service` | **client/src/config/config.js**
+`${REACT_APP_PORT}` | Port for Client | Exists only in `**.env** file
+
+> :warning: If you change `${REACT_APP_PORT}` then you have to edit the `default.conf` file in path ***client/nginx/default.conf***. Edit the port in line `listen 3000;` and change `3000` with you port.
+
 
 ### Backend
 
-**comments/**
+**Posts Service**
 
-_api:_
+Action | HTTP request | URI | Folder/file
+--- | --- | --- | ---
+*Create Posts* | `POST` | `http://localhost:{POST_PORT}/posts` | **posts/index.js**
+*Get Posts* | `GET` | `http://localhost:{POST_PORT}/posts` | **posts/index.js**
 
-```http
-POST http://localhost:5000/posts/:post_id/comments
+***ENVIRONMENT VARIABLES***
 
-GET http://localhost:5000/posts/:post_id/comments
+All environment variables exist in `.env` file in root folder.
+
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
+
+Variable | Info | Folder/file
+--- | --- | ---
+`${POST_PORT}` | The port in which run `Posts Service` | **posts/config/index.js**
+`${POST_TOPIC}` | `Kafka Topic` in which `Posts Service` sends the created Post | **posts/config/index.js**
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | **posts/config/index.js**
+
+_request structure:_
+
+```js
+/*
+    When someone Create a Post the structure is the Following (Example)
+*/
+{
+    id: 123,  //Post Id
+    title: 'FirstTitle' //The Title of Post
+}
 ```
+
+_database:_
+
+| ID         | Title      |
+| -----------| -----------|
+| 123        | FirstTitle |
+
+
+**Comments Service**
+
+Action | HTTP request | URI | Folder/file
+--- | --- | --- | ---
+*Create Comments* | `POST` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | **comments/index.js**
+*Get Comments* | `GET` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | **comments/index.js**
+
+***ENVIRONMENT VARIABLES***
+
+All environment variables exist in `.env` file in root folder.
+
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change the config files in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
+
+Variable | Info | Folder/file
+--- | --- | ---
+`${COMMENT_PORT}` | The port in which run `Comments Service` | **posts/config/index.js**
+`${COMMENT_TOPIC}` | `Kafka Topic` in which `Comments Service` sends created Comments for a specific Post | **posts/config/index.js**
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | **posts/config/index.js**
 
 _request structure:_
 
@@ -88,37 +164,9 @@ _database:_
 | -----------------| -----------------|
 | j23              | My first Comment |
 
-**posts/**
-
-_api:_
-
-```http
-POST http://localhost:4000/posts
-
-GET http://localhost:4000/posts
-```
-
-_request structure:_
-
-```js
-/*
-    When someone Create a comment the structure is the Following (Example)
-*/
-{
-    id: 123,  //Post Id
-    title: 'FirstTitle' //The Title of Post
-}
-```
-
-_database:_
-
-| ID         | Title      |
-| -----------| -----------|
-| 123        | FirstTitle |
-
 **Apache Kafka**
 
-Apache Kafka have 2 Topis:
+Apache Kafka have at least 2 Topis:
 
 PostCreated_topic && CommentCreated_topic
 
@@ -159,3 +207,4 @@ _api:_
 GET http://localhost:6000/posts
 ```
 
+## Config NGINX
