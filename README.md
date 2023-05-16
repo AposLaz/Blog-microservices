@@ -4,7 +4,7 @@ This is a small application in microservices.
 
 Initial goal is create the logic of microservices and after host in Kubernetes.
 
-## STRUCTURE
+## Structure
 
 ```bash
 blog-microservices/

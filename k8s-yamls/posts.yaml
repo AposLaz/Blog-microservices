@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: posts
+  labels:
+    tier: backend
+    app: posts 
+spec:
+  containers:
+  - name: posts
+    image: alazidis/blog-microservices-posts
+    env:
+    - name: POST_TOPIC
+      valueFrom:
+        configMapKeyRef:
+          name: blog-microservices
+          key: POST_TOPIC
+    - name: KAFKA_BROKERS
+      valueFrom:
+        configMapKeyRef:
+          key: KAFKA_BROKERS
+          name: blog-microservices
+    - name: POST_PORT
+      valueFrom:
+        configMapKeyRef:
+          key: POST_PORT
+          name: blog-microservices
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
