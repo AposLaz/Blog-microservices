@@ -2,7 +2,13 @@
 
 This is a small application in microservices.
 
-Initial goal is create the logic of microservices and after host in Kubernetes.
+Initial goal is create the logic of microservices and after host 
+in Kubernetes.
+
+Image of my application with default Environment Variables
+
+
+![image](files/Blog-microservices.png)
 
 ## Structure
 
@@ -14,6 +20,8 @@ blog-microservices/
 ├── posts/
 ├── query-posts-service/
 ├── kafka/
+├── files/  ## images etc.
+├── k8s-yamls/ ## for Kubernetes
 ├── .env
 └── README.md
 ```
@@ -23,6 +31,8 @@ There is a ```.env``` file where exist all configuration for ports, hosts etc. U
 
 
 ## Getting Started
+
+### Production
 
 1. Clone repository	
     ```bash
@@ -41,6 +51,27 @@ There is a ```.env``` file where exist all configuration for ports, hosts etc. U
     # wait 30seconds
     ```
 3. Open **http://localhost:3050/** on broswer and create your posts.
+
+### Development
+
+1. Clone repository	
+    ```bash
+	$ git clone https://github.com/AposLaz/Blog-microservices.git
+		
+	$ cd Blog-microservices
+
+	# Remove current origin repo
+	$ git remote remove origin  
+    ```
+2. Start Application using Docker :whale2: https://www.docker.com/
+
+    ```bash
+    $ docker-compose -f docker-compose-dev.yml up -d
+
+    # wait 30seconds
+    ```
+3. Open **http://localhost:3050/** on broswer and create your posts.
+
 
 # Documentation
 
@@ -130,8 +161,8 @@ _database:_
 
 Action | HTTP request | URI | Folder/file
 --- | --- | --- | ---
-*Create Comments* | `POST` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | comments/index.js
-*Get Comments* | `GET` | `http://localhost:${COMMENT_PORT}/posts/:post_id/comments` | comments/index.js
+*Create Comments* | `POST` | `http://localhost:${COMMENT_PORT}/posts/:{id of Post}/comments` | comments/index.js
+*Get Comments* | `GET` | `http://localhost:${COMMENT_PORT}/posts/:{id of Post}/comments` | comments/index.js
 
 ***ENVIRONMENT VARIABLES***
 
@@ -141,9 +172,9 @@ All environment variables exist in `.env` file in root folder.
 
 Variable | Info | Folder/file
 --- | --- | ---
-`${COMMENT_PORT}` | The port in which run `Comments Service` | posts/config/index.js
-`${COMMENT_TOPIC}` | `Kafka Topic` in which `Comments Service` sends created Comments for a specific Post | posts/config/index.js
-`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | posts/config/index.js
+`${COMMENT_PORT}` | The port in which run `Comments Service` | comments/config/index.js
+`${COMMENT_TOPIC}` | `Kafka Topic` in which `Comments Service` sends created Comments for a specific Post | comments/config/index.js
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | comments/config/index.js
 
 _request structure:_
 
@@ -171,14 +202,14 @@ Apache Kafka have at least 2 Topis:
 PostCreated_topic && CommentCreated_topic
 
 ```js
-When a `post/` creates the Producer sends to PostCreated_topic the following info : 
+/* When we create a `post/` a message sends to PostCreated_topic (Example) : */
 
     {
         id: 123, //Post Id
         title: 'FirstTitle' //The Title of Post
     }
 
-When a `comment/` creates the Producer sends to CommentCreated_topic the following info :
+/* When we create a `comment/` a message sends to CommentCreated_topic (Example) : */
 
     {
         id: j23, //commentId
@@ -187,11 +218,11 @@ When a `comment/` creates the Producer sends to CommentCreated_topic the followi
     }
 ```
 ---
-**query-posts-service/**
+**Query Service**
 
-When we want to fetch a post with all of its comments we query for the post in **query-posts-service/** Service.
+When we want to fetch a post with all of its comments we query for the post with comments in **query-posts-service/** Service.
 
-This service accepts from Kafka topics (PostCreated, CommentCreated)
+This service accepts messages from Kafka topics (PostCreated, CommentCreated)
 
 Consumers of Apache Kafka receive all the messages from Topics PostCreated && CommentCreated. So, the table for its database looks like:
 
@@ -201,10 +232,46 @@ _database:_
 | -----------| -----------|----------------------------------------|
 | 123        | FirstTitle | {id: j23, comment: 'My first Comment'} |
 
-_api:_
 
-```http
-GET http://localhost:6000/posts
-```
+Action | HTTP request | URI | Folder/file
+--- | --- | --- | ---
+*Get Posts with Comments* | `GET` | `http://localhost:${QUERY_PORT}/posts` | query-posts-service/index.js
+
+
+***ENVIRONMENT VARIABLES***
+
+All environment variables exist in `.env` file in root folder.
+
+> :warning: **Change Variables**: Be very careful here! Recommend don't change ```Variablies``` in ```.env``` file. But you are free to change them. If you change the ```Variables``` then you have to change config file in **nginx/** folder. Check below in Section [Config NGINX](#config-nginx).
+
+Variable | Info | Folder/file
+--- | --- | ---
+`${QUERY_PORT}` | The port in which run `Comments Service` | query-posts-service/config/index.js
+`${POST_TOPIC}` | `Kafka Topic` in which `Query Service` accept the created Posts | query-posts-service/config/index.js
+`${COMMENT_TOPIC}` | `Kafka Topic` in which `Query Service` accept created Comments for a specific Post | query-posts-service/config/index.js
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | query-posts-service/config/index.js
+
+---
+
+**kafka Service**
+
+Kafka Service is a Kafka admin client who can create Topics with many partitions and replicas. User can define the name of topics, number of partitions and number of replicas.
+
+In Docker compose we can declare Environment Variables for these values.
+
+
+***ENVIRONMENT VARIABLES***
+
+All environment variables exist in `.env` file in root folder.
+
+Variable | Info | Folder/file
+--- | --- | ---
+`${KAFKA_TOPICS}` | All topics that we want to create | kafka/config/index.js
+`${KAFKA_REPLICATION_FACTOR}` | Replication factor for topics ${KAFKA_TOPICS} | kafka/config/index.js
+`${KAFKA_NUM_PARTITIONS}` | Number of partitions for topics ${KAFKA_TOPICS} | kafka/config/index.js
+`${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | kafka/config/index.js
+---
 
 ## Config NGINX
+
+With NGINX we
