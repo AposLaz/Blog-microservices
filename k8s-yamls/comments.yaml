@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: comments
+  labels:
+    name: comments
+    tier: backend
+spec:
+  containers:
+  - name: comments
+    image: alazidis/blog-microservices-comments
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 5000
+    env:
+      - name: COMMENT_PORT
+        valueFrom:
+          configMapKeyRef:
+            key: COMMENT_PORT
+            name: blog-microservices
+      - name: COMMENT_TOPIC
+        valueFrom:
+          configMapKeyRef:
+            key: COMMENT_TOPIC
+            name: blog-microservices
+      - name: KAFKA_BROKERS
+        valueFrom:
+          configMapKeyRef:
+            key: KAFKA_BROKERS
+            name: blog-microservices

@@ -14,7 +14,7 @@ const kafka = new Kafka({
 //create default partitioner
 const producer = kafka.producer({ 
     createPartitioner: Partitioners.DefaultPartitioner, 
-    allowAutoTopicCreation: false,
+    allowAutoTopicCreation: true,
 })
 
 

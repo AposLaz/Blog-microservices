@@ -5,4 +5,10 @@ metadata:
 data:
   POST_PORT: "4000"
   POST_TOPIC: "PostCreated"
-  KAFKA_BROKERS: "kafka1:19092,kafka2:29092,kafka3:39092"
+  COMMENT_PORT: "5000"
+  COMMENT_TOPIC: "CommentCreated"
+  QUERY_PORT: "6000"
+  KAFKA_BROKERS: "my-release-kafka:9092"
+  KAFKA_TOPICS: "PostCreated"
+  KAFKA_REPLICATION_FACTOR: "3"
+  KAFKA_NUM_PARTITIONS: "4"

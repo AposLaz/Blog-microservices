@@ -14,11 +14,11 @@ const topic_post = POST_TOPIC
 const topic_comment = COMMENT_TOPIC
 const consumer_post = kafka.consumer({
                               groupId: 'blog-posts-1', 
-                              allowAutoTopicCreation: false
+                              allowAutoTopicCreation: true
                             })
 const consumer_comment = kafka.consumer({
                               groupId: 'blog-comments-1', 
-                              allowAutoTopicCreation: false
+                              allowAutoTopicCreation: true
                             })
 
 //this is our post table

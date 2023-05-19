@@ -13,16 +13,12 @@ const create_topics = async (kafka)=>{
 
         //find that topics exist
         const kafka_exist_topics=await admin.listTopics()
-        const topics=await KAFKA_TOPICS.filter(topic => kafka_exist_topics.includes(topic))
+        const topics=await KAFKA_TOPICS.filter(topic => !kafka_exist_topics.includes(topic))
         /**
          * if topics exists then return topics
          * else create topics
          */
         if(topics.length > 1){
-            console.log('---------- topics ----------')
-            console.table(topics)
-        }
-        else{
             await admin.createTopics({
                 topics: KAFKA_TOPICS.map((topic)=>{
                         return {
@@ -32,6 +28,10 @@ const create_topics = async (kafka)=>{
                         }
                     })
             })
+        }
+        else{
+            console.log('---------- topics ----------')
+            console.table(topics)
         }
         await admin.disconnect()
     } catch (error) {
