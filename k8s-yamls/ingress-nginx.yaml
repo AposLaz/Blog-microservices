@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+   - http:
+      paths:
+      - pathType: Prefix
+        path: /posts-svc/?(.*)
+        backend:
+          service:
+            name: posts-svc
+            port: 
+              number: 4000
+      - pathType: Prefix
+        path: /comments-svc/?(.*)
+        backend:
+          service:
+            name: comments-svc
+            port: 
+              number: 5000
+      - pathType: Prefix
+        path: /query-comments-post-svc/?(.*)
+        backend:
+          service:
+            name: query-comments-post-svc
+            port: 
+              number: 6000
+      - pathType: Prefix
+        path: /?(.*)
+        backend:
+          service:
+            name: client-svc
+            port: 
+              number: 3000
+      

@@ -6,7 +6,6 @@ const route = '/comments'
 
 export const createComment = async(id,comment)=>{
     const url = uri+id+route
-    console.log(url)
     await axios.post(url,{
         comment
     })

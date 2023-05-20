@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      name: client
+      labels:
+        app: client
+        tier: frontend
+    spec:
+      containers:
+      - name: client
+        image: alazidis/blog-microservices-client
+        ports:
+        - containerPort: 3000
+        env:
+          - name: REACT_APP_POST_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: REACT_APP_POST_HOST
+                name: blog-microservices
+          - name: REACT_APP_COMMENT_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: REACT_APP_COMMENT_HOST
+                name: blog-microservices
+          - name: REACT_APP_QUERY_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: REACT_APP_QUERY_HOST
+                name: blog-microservices
+
+--- 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-svc
+spec:
+  selector:
+    app: client
+  ports:
+  - name: client
+    port: 3000
+    protocol: TCP
+    targetPort: 3000

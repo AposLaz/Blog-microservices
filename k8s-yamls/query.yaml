@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-comments-post-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query-comments-post
+  template:
+    metadata:
+      name: query-comments-post
+      labels:
+        app: query-comments-post
+    spec:
+      containers:
+      - name: query-comments-post
+        image: alazidis/blog-microservices-query
+        ports:
+          - containerPort: 6000
+        env:
+          - name: QUERY_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: QUERY_PORT
+                name: blog-microservices
+          - name: POST_TOPIC
+            valueFrom:
+              configMapKeyRef:
+                key: POST_TOPIC
+                name: blog-microservices
+          - name: COMMENT_TOPIC
+            valueFrom:
+              configMapKeyRef:
+                key: COMMENT_TOPIC
+                name: blog-microservices
+          - name: KAFKA_BROKERS
+            valueFrom:
+              configMapKeyRef:
+                key: KAFKA_BROKERS
+                name: blog-microservices
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-comments-post-svc
+spec:
+  selector:
+    app: query-comments-post
+  ports:
+  - name: query-comments-post
+    protocol: TCP
+    port: 6000
+    targetPort: 6000
+

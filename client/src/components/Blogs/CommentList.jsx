@@ -6,7 +6,7 @@ function CommentList({comments}) {
     <div>
         <ul >
           {
-              comments.map((comment,index)=>{
+              comments && comments.map((comment,index)=>{
                           return <li className='mt-0-75 mb-0-75' style={{wordWrap: 'break-word'}} key={index}>{comment.content}</li>
               })
           }

@@ -3,6 +3,9 @@ kind: ConfigMap
 metadata:
   name: blog-microservices
 data:
+  REACT_APP_POST_HOST: "posts-svc"
+  REACT_APP_COMMENT_HOST: "comments-svc"
+  REACT_APP_QUERY_HOST: "query-comments-post-svc"
   POST_PORT: "4000"
   POST_TOPIC: "PostCreated"
   COMMENT_PORT: "5000"
@@ -10,5 +13,5 @@ data:
   QUERY_PORT: "6000"
   KAFKA_BROKERS: "my-release-kafka:9092"
   KAFKA_TOPICS: "PostCreated"
-  KAFKA_REPLICATION_FACTOR: "3"
+  KAFKA_REPLICATION_FACTOR: "1"
   KAFKA_NUM_PARTITIONS: "4"
