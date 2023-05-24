@@ -5,4 +5,5 @@ module.exports = {
     KAFKA_BROKERS: kafka_brokers,
     POST_TOPIC: process.env.POST_TOPIC,
     COMMENT_TOPIC: process.env.COMMENT_TOPIC,
+    MONGO_CONNECT: `${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`
 }

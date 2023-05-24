@@ -2,8 +2,16 @@ const express = require('express')
 const cors = require('cors')
 const {posts_comments} = require('./kafkaConsumer')
 const {PORT} = require('./config/index')
+const {connectMongoose} = require('./db/connectDB')
 
 const app = express()
+
+//connect to database
+connectMongoose()
+.then(console.log('Connected to Database'))
+.catch((err)=>{
+    console.log(err)
+})
 
 app.use(cors())
 

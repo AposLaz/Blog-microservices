@@ -14,7 +14,7 @@ services:
    environment:
     REACT_APP_POST_HOST: ${REACT_APP_POST_HOST}
     REACT_APP_COMMENT_HOST: ${REACT_APP_COMMENT_HOST}
-    REACT_APP_QUERY: ${REACT_APP_QUERY}
+    REACT_APP_QUERY_HOST: ${REACT_APP_QUERY_HOST}
     CHOKIDAR_USEPOLLING: true
    volumes:
     - ./client/:/app/
@@ -86,12 +86,47 @@ services:
     POST_TOPIC: ${POST_TOPIC}
     COMMENT_TOPIC: ${COMMENT_TOPIC}
     KAFKA_BROKERS: ${KAFKA_BROKERS}
+    MONGO_HOST: ${MONGO_HOST}
+    MONGO_PORT: ${MONGO_PORT}
    restart: on-failure
    depends_on:
       - kafka_admin      
    networks:
     - default
+    - server-database
   
+  mongo:
+    container_name: ${MONGO_HOST}
+    image: mongo:4.2.24
+    restart: always
+    ports:
+      - '${MONGO_PORT}:${MONGO_PORT}'
+    networks:
+      - server-database
+      - mongo-client
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+  
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:1.0.0-alpha.4
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin      
+      ME_CONFIG_MONGODB_SERVER: ${MONGO_HOST}
+    depends_on:
+      - mongodb
+    networks:
+      - mongo-client
+    volumes:
+      - mongodata:/data/db
+
   kafka_admin:
    container_name: kafka_admin
    build: 
@@ -112,7 +147,6 @@ services:
      control-center:
        condition: service_started
      
-
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
     container_name: zookeeper
@@ -207,6 +241,13 @@ services:
     - default
     restart: always
 
+volumes:
+  mongodata:
+
 networks:
     default:
-     driver: bridge
+      driver: bridge
+    server-database:
+      driver: bridge
+    mongo-client:
+      driver: bridge
