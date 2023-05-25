@@ -2,13 +2,12 @@
 const mongoose = require("mongoose");
 
 // Define a schema
-const Schema = mongoose.Schema;
-
-const blogModelSchema = new Schema({
-  id: Number,
-  post: String,
+const blogModelSchema = new mongoose.Schema({
+  _id: String,
+  post_title: {type: String, required: true},
   comments: [{
-    comment_id: Number,
+    _id: false,
+    id: String,
     content: String
   }]
 });

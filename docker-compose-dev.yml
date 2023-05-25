@@ -88,6 +88,9 @@ services:
     KAFKA_BROKERS: ${KAFKA_BROKERS}
     MONGO_HOST: ${MONGO_HOST}
     MONGO_PORT: ${MONGO_PORT}
+    MONGO_USERNAME: ${MONGO_USERNAME}
+    MONGO_PASSWORD: ${MONGO_PASSWORD}
+    CHOKIDAR_USEPOLLING: true
    restart: on-failure
    depends_on:
       - kafka_admin      
@@ -121,7 +124,7 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: admin      
       ME_CONFIG_MONGODB_SERVER: ${MONGO_HOST}
     depends_on:
-      - mongodb
+      - mongo
     networks:
       - mongo-client
     volumes:

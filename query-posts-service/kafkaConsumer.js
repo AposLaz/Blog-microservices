@@ -1,5 +1,6 @@
 const { Kafka } = require('kafkajs');
 const {POST_TOPIC, COMMENT_TOPIC, KAFKA_BROKERS} = require('./config/index')
+const blog_service = require('./services/blog-service')
 
 const kafka = new Kafka({
     clientId: 'my-app-consumer',
@@ -21,9 +22,6 @@ const consumer_comment = kafka.consumer({
                               allowAutoTopicCreation: true
                             })
 
-//this is our post table
-let posts_comments = {}
-
 const run = async () => {
     await consumer_post.connect()
     await consumer_comment.connect()
@@ -36,18 +34,16 @@ const run = async () => {
       // },
       eachMessage: async ({ message }) => {
         const json_msg = JSON.parse(message.value)
-        posts_comments[json_msg.id] = {
-            id: json_msg.id,                //post id
-            title: json_msg.title,          //post title
-            comments: []                    //comments of post here
-        }
+
+        blog_service.blog_store(json_msg)
       },
     })
 
     await consumer_comment.run({
         eachMessage: async ({ message }) => {
             const msg = JSON.parse(message.value)
-            posts_comments[msg.post_id].comments.push(msg.comments)     //create final table with posts and comments
+               //create final table with posts and comments
+            await blog_service.comments_store(msg)
         }
     })
   }
@@ -87,8 +83,3 @@ const run = async () => {
       }
     })
   })
-
-
-module.exports = {
-    posts_comments
-};

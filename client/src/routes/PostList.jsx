@@ -38,8 +38,8 @@ function PostList() {
             {Object.values(fetch_list).map((post,index)=>{
                 return <BlogCard 
                           key={index}
-                          postId={post.id}
-                          title={post.title}
+                          postId={post._id}
+                          title={post.post_title}
                           comments={post.comments}
                       />
             })}
