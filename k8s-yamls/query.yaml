@@ -39,6 +39,27 @@ spec:
               configMapKeyRef:
                 key: KAFKA_BROKERS
                 name: blog-microservices
+          - name: MONGO_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: MONGO_HOST
+                name: blog-microservices   
+          - name: MONGO_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: MONGO_PORT
+                name: blog-microservices                       
+          - name: MONGO_USERNAME
+            valueFrom:
+              secretKeyRef: 
+                name: secret-db
+                key: MONGO_USERNAME
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef: 
+                name: secret-db
+                key: MONGO_PASSWORD
+
 
 ---
 

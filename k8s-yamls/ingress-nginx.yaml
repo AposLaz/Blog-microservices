@@ -11,13 +11,6 @@ spec:
    - http:
       paths:
       - pathType: Prefix
-        path: /?(.*)
-        backend:
-          service:
-            name: client-svc
-            port: 
-              number: 3000
-      - pathType: Prefix
         path: /posts-svc/?(.*)
         backend:
           service:
@@ -38,6 +31,14 @@ spec:
             name: query-comments-post-svc
             port: 
               number: 6000
+      - pathType: Prefix
+        path: /?(.*)
+        backend:
+          service:
+            name: client-svc
+            port: 
+              number: 3000
+      
 
 
       
