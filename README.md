@@ -3,7 +3,7 @@
 This is a small application in microservices. A user can create a post and other users can comment.
 
 Initial goal is create the logic of microservices and after host 
-in Kubernetes. If you want to see how I deploy the application in Kubernetes with Terraform in GCP the follow the link https://github.com/AposLaz/Terraform/tree/main/kubernetes-cluster/gke.
+in Kubernetes. If you want to read how to deploy the application in Kubernetes [(I use GKE - Coogle Kubernetes Engine)](https://cloud.google.com/kubernetes-engine) with [Terraform](https://developer.hashicorp.com/terraform/tutorials/kubernetes/gke) the follow then link https://github.com/AposLaz/Terraform/tree/main/kubernetes-cluster/gke.
 
 ## Build With
 
