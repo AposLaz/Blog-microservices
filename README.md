@@ -17,7 +17,7 @@ in Kubernetes. If you want to read how to deploy the application in Kubernetes [
   <img alt="Mongo-Express" src="https://img.shields.io/badge/Mongo Express-red?logo=mongoDB&logoColor=green&style=for-the-badge" />
   <img alt="Kafka" src="https://img.shields.io/badge/Apache Kafka-000?logo=apachekafka&logoColor=white&style=for-the-badge" />
   <img alt="Nginx" src="https://img.shields.io/badge/Nginx-yellow?logo=nginx&logoColor=fff&style=for-the-badge" />
-  <img alt="Docker" src="https://img.shields.io/badge/Docker-fff?logo=docker&logoColor=blue&style=for-the-badge" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-f5f5f5?logo=docker&logoColor=blue&style=for-the-badge" />
 </p>
 
 ## Architecture
