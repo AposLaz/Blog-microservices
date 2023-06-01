@@ -8,16 +8,16 @@ in Kubernetes. If you want to see how I deploy the application in Kubernetes wit
 ## Build With
 
 <p>
-  <img alt="React" src="https://img.shields.io/badge/React.JS-61DAFB?logo=react&logoColor=000&style=flat" />
-  <img alt="Node.JS" src="https://img.shields.io/badge/Node.JS-393?logo=node.js&logoColor=fff&style=flat" />
-  <img alt="Express.JS" src="https://img.shields.io/badge/Express.JS-f2f0f0?logo=express&logoColor=black&style=flat" />
-  <img alt="HTML" src="https://img.shields.io/badge/HTML-E34F26?logo=html5&logoColor=white&style=flat" />
-  <img alt="Css" src="https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white&style=flat" />
-  <img alt="MongoDB" src="https://img.shields.io/badge/Mongo-888?logo=mongoDB&logoColor=green&style=flat" />
-  <img alt="Mongo-Express" src="https://img.shields.io/badge/Mongo Express-red?logo=mongoDB&logoColor=green&style=flat" />
-  <img alt="Kafka" src="https://img.shields.io/badge/Apache Kafka-000?logo=apachekafka&logoColor=white&style=flat" />
-  <img alt="Nginx" src="https://img.shields.io/badge/Nginx-yellow?logo=nginx&logoColor=fff&style=flat" />
-  <img alt="Docker" src="https://img.shields.io/badge/Docker-fff?logo=docker&logoColor=blue&style=flat" />
+  <img alt="React" src="https://img.shields.io/badge/React.JS-61DAFB?logo=react&logoColor=000&style=for-the-badge" />
+  <img alt="Node.JS" src="https://img.shields.io/badge/Node.JS-393?logo=node.js&logoColor=fff&style=for-the-badge" />
+  <img alt="Express.JS" src="https://img.shields.io/badge/Express.JS-f2f0f0?logo=express&logoColor=black&style=for-the-badge" />
+  <img alt="HTML" src="https://img.shields.io/badge/HTML-E34F26?logo=html5&logoColor=white&style=for-the-badge" />
+  <img alt="Css" src="https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white&style=for-the-badge" />
+  <img alt="MongoDB" src="https://img.shields.io/badge/Mongo-888?logo=mongoDB&logoColor=green&style=for-the-badge" />
+  <img alt="Mongo-Express" src="https://img.shields.io/badge/Mongo Express-red?logo=mongoDB&logoColor=green&style=for-the-badge" />
+  <img alt="Kafka" src="https://img.shields.io/badge/Apache Kafka-000?logo=apachekafka&logoColor=white&style=for-the-badge" />
+  <img alt="Nginx" src="https://img.shields.io/badge/Nginx-yellow?logo=nginx&logoColor=fff&style=for-the-badge" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-fff?logo=docker&logoColor=blue&style=for-the-badge" />
 </p>
 
 ## Architecture
