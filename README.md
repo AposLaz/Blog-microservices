@@ -1,16 +1,31 @@
 # Blog app microservices 
 
-This is a small application in microservices.
+This is a small application in microservices. A user can create a post and other users can comment.
 
 Initial goal is create the logic of microservices and after host 
-in Kubernetes.
+in Kubernetes. If you want to see how I deploy the application in Kubernetes with Terraform in GCP the follow the link https://github.com/AposLaz/Terraform/tree/main/kubernetes-cluster/gke.
 
-Image of my application with default Environment Variables
+## Build With
 
+<p>
+  <img alt="React" src="https://img.shields.io/badge/React.JS-61DAFB?logo=react&logoColor=000&style=flat" />
+  <img alt="Node.JS" src="https://img.shields.io/badge/Node.JS-393?logo=node.js&logoColor=fff&style=flat" />
+  <img alt="Express.JS" src="https://img.shields.io/badge/Express.JS-f2f0f0?logo=express&logoColor=black&style=flat" />
+  <img alt="HTML" src="https://img.shields.io/badge/HTML-E34F26?logo=html5&logoColor=white&style=flat" />
+  <img alt="Css" src="https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white&style=flat" />
+  <img alt="MongoDB" src="https://img.shields.io/badge/Mongo-888?logo=mongoDB&logoColor=green&style=flat" />
+  <img alt="Mongo-Express" src="https://img.shields.io/badge/Mongo Express-red?logo=mongoDB&logoColor=green&style=flat" />
+  <img alt="Kafka" src="https://img.shields.io/badge/Apache Kafka-000?logo=apachekafka&logoColor=white&style=flat" />
+  <img alt="Nginx" src="https://img.shields.io/badge/Nginx-yellow?logo=nginx&logoColor=fff&style=flat" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-fff?logo=docker&logoColor=blue&style=flat" />
+</p>
+
+## Architecture
 
 ![image](files/Blog-microservices.png)
 
-## Structure
+
+## Project Structure
 
 ```bash
 blog-microservices/
@@ -22,13 +37,13 @@ blog-microservices/
 ├── kafka/
 ├── files/  ## images etc.
 ├── k8s-yamls/ ## for Kubernetes
-├── .env
 └── README.md
 ```
 
 For every service created a specific image in docker hub. Expect **nginx**.
 There is a ```.env``` file where exist all configuration for ports, hosts etc. Use your specific values or let defaults.
 
+If you want to learn more about application read the [Documentation](#documentation) below
 
 ## Getting Started
 
@@ -237,6 +252,7 @@ Action | HTTP request | URI | Folder/file
 --- | --- | --- | ---
 *Get Posts with Comments* | `GET` | `http://localhost:${QUERY_PORT}/posts` | query-posts-service/index.js
 
+All data store in a [MongoDB](https://www.mongodb.com/) Database in which we use [mongo-express](https://github.com/mongo-express/mongo-express) which is admin interface for MongoDB.
 
 ***ENVIRONMENT VARIABLES***
 
@@ -271,6 +287,7 @@ Variable | Info | Folder/file
 `${KAFKA_NUM_PARTITIONS}` | Number of partitions for topics ${KAFKA_TOPICS} | kafka/config/index.js
 `${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | kafka/config/index.js
 ---
+
 
 ## Config NGINX
 
