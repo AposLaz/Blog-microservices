@@ -1,14 +1,14 @@
-const { Kafka } = require('kafkajs');
-const topics_create = require('./functions');
-const {KAFKA_BROKERS} = require('./config/index')
+import { Kafka } from "kafkajs";
+import create_topics from "./functions.js";
+import { Configs } from "./config/index.js";
 
 const kafka = new Kafka({
-    clientId: 'my-app',
-    brokers: KAFKA_BROKERS,
-    retry: {
-        initialRetryTime: 1000,
-        retries: 20
-      }    
+  clientId: "my-app",
+  brokers: Configs.KAFKA_BROKERS,
+  retry: {
+    initialRetryTime: 1000,
+    retries: 20,
+  },
 });
 
-topics_create(kafka)
+create_topics(kafka);

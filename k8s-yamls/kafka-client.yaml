@@ -32,3 +32,8 @@ spec:
         configMapKeyRef:
           key: KAFKA_NUM_PARTITIONS
           name: blog-microservices
+    - name: KAFKA_APP
+      valueFrom:
+        configMapKeyRef:
+          key: KAFKA_APP
+          name: blog-microservices

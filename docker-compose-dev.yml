@@ -143,6 +143,7 @@ services:
     KAFKA_BROKERS: ${KAFKA_BROKERS}
     KAFKA_REPLICATION_FACTOR: ${KAFKA_REPLICATION_FACTOR}
     KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+    KAFKA_APP: 'my-app'
    networks:
      - default
    restart: always
