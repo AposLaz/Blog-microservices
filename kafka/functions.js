@@ -27,7 +27,11 @@ const create_topics = async (kafka) => {
       });
     } else {
       console.log("---------- topics ----------");
-      console.table(topics);
+      console.table(
+        kafka_exist_topics.filter((topic) =>
+          Configs.KAFKA_TOPICS.includes(topic)
+        )
+      );
     }
     await admin.disconnect();
   } catch (error) {
