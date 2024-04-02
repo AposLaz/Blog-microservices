@@ -286,6 +286,7 @@ Variable | Info | Folder/file
 `${KAFKA_REPLICATION_FACTOR}` | Replication factor for topics ${KAFKA_TOPICS} | kafka/config/index.js
 `${KAFKA_NUM_PARTITIONS}` | Number of partitions for topics ${KAFKA_TOPICS} | kafka/config/index.js
 `${KAFKA_BROKERS}` | All Kafka Brokers in Cluster | kafka/config/index.js
+`${KAFKA_APP}`: | Kafka client id
 ---
 
 
