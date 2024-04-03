@@ -15,7 +15,7 @@ const create_topics = async (kafka) => {
      * if topics exists then return topics
      * else create topics
      */
-    if (topics.length > 1) {
+    if (topics.length > 0) {
       await admin.createTopics({
         topics: Configs.KAFKA_TOPICS.map((topic) => {
           return {
