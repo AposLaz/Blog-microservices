@@ -10,7 +10,7 @@ COPY . .
 CMD ["npm", "run", "build"]
 
 #Step 2 server side render
-FROM nginx:1.19.0
+FROM nginx:1.26.1
 EXPOSE 3000
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
